@@ -51,5 +51,20 @@ Z_median = np.median(Z)
 D1, D0 = D[Z > Z_median], D[Z <= Z_median]
 Y1, Y0 = Y[Z > Z_median], Y[Z <= Z_median]
 ```
+We can estimate the treatment effect separately for each group using OLS:
+```python
+X1, X0 = np.column_stack((np.ones(len(D1)), D_hat[Z > Z_median])), np.column_stack((np.ones(len(D0)), D_hat[Z <= Z_median]))
+model_y1, model_y0 = OLS(Y1, X1).fit(), OLS(Y0, X0).fit()
+delta1, delta0 = model_y1.params[1], model_y0.params[1]
+```
+The LATE is the difference between the treatment effects for the two groups, weighted by the proportion of individuals in each group:
+```python
+p1 = len(D1) / n
+p0 = len(D0) / n
+late = p1 * delta1 - p0 * delta0
+```
+In this example, the LATE estimate is:
+"LATE=3.5868043845292945"
+
 
 
