@@ -13,7 +13,7 @@ We can generate some random data for these variables with the numpy library in P
 import numpy as np
 
 np.random.seed(123)
-n = 20
+n = 25
 D = np.random.randint(0, 2, size=n)
 Z = np.random.normal(size=n)
 Y = 1 + D + 2*Z + np.random.normal(size=n)
